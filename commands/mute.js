@@ -41,8 +41,6 @@ module.exports = {
                     },
                     reason: 'no mute role was found'
                 })
-                
-                return message.channel.send(noMuteRoleFound)
             }
 
             var muteRole = message.guild.roles.cache.find(role => role.name === 'mute');
