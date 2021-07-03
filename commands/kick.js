@@ -5,6 +5,7 @@
 const checkmark = '<:checkmark:856176905643098122>';
 const crossmark = '<:crossmark:856190653389471794>';
 
+//Module export, DO NOT MESS WITH
 module.exports= {
     name: 'kick',
     descriptions: 'this is a kick command',
@@ -18,14 +19,14 @@ module.exports= {
 
         //Checks if a user was mentioned, if not it will display the help section
         if(!args[0]){
-            const errorKickEmbed = new Discord.MessageEmbed()
+            const noArgsFound = new Discord.MessageEmbed()
                 .addFields(
                     { name: 'Description:', value: 'Allows a user to kick a member'},
                     { name: 'Example:', value: 'cm!kick @Keyemail reason'},
                     { name: 'Cooldown:', value: '5 Seconds'},
                 )
-                .setColor('#0072FF')
-            message.channel.send(errorKickEmbed)   
+                .setColor('#0072FF');
+            message.channel.send(noArgsFound)  ; 
         return;             
         }
 

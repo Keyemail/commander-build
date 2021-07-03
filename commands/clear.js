@@ -5,14 +5,14 @@
 const checkmark = '<:checkmark:856176905643098122>';
 const crossmark = '<:crossmark:856190653389471794>';
 
-//Command handler || DO NOT MESS WITH
+//Module export, DO NOT MESS WITH
 module.exports= {
     name: 'clear',
     descriptions: 'this is a clear command',
     cooldown: 5,
     async execute(message, args, cmd, client, Discord){
 
-        //Checks if command is being used in a DM
+        //If no other arguments found, tell the user what the command does
         if (message.channel instanceof Discord.DMChannel){
             message.channel.send("This command is not for Direct Messages. To use this command you must be in a server!")
             return;
@@ -83,11 +83,14 @@ module.exports= {
                 message.channel.send(errorkickEmbed)
                 console.log(`ERROR: There was a error while kicking a user, error code details: ${err}`)
             });
+
             const messageDeletedEmbed = new Discord.MessageEmbed()
                 .setDescription(`${checkmark}  Deleted ${args[0]} messages in this channel!`)
                 .setColor(`#3FC45E`)
             message.channel.send(messageDeletedEmbed).then(newMessage => newMessage.delete({timeout: 5000}));//Sends the messages saying it deleted it and deletes the message after 5 seconds
+        
         })
 
     }
+
 }

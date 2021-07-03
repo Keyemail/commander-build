@@ -5,6 +5,7 @@
 const checkmark = '<:checkmark:856176905643098122>';
 const crossmark = '<:crossmark:856190653389471794>';
 
+//Module export, DO NOT MESS WITH
 module.exports = {
     name: 'slowmode',
     description: "this is a slowmode command",
@@ -17,7 +18,7 @@ module.exports = {
             return;
         }
 
-        //Checks if a user was mentioned, if not it will display the help section
+        //If no other arguments found, tell the user what the command does
         if(!args[0]){
             const noArgsFound = new Discord.MessageEmbed()
                 .addFields(
@@ -26,9 +27,18 @@ module.exports = {
                     { name: 'Cooldown:', value: '5 Seconds'},
                 )
                 .setColor('#0072FF');
-            return message.channel.send(noArgsFound)   ;           
+            return message.channel.send(noArgsFound);           
         }
 
+        //Checks if the user has permissions to do this command
+        if (!message.member.permissions.has('MANAGE_CHANNELS' || 'ADMINISTRATOR')) {
+            const noPermissions = new Discord.MessageEmbed()
+            .setDescription(`${crossmark}  You must have "MANAGE CHANNEL" or "ADMINISTRATOR" permissions in your role to use this command.`)
+            .setColor('#D64D50');
+        return message.channel.send(noPermissions);
+        }
+
+        //Checks if the number is a valid number
         if(isNaN(args[0])){
             const notRealNumberEmbed = new Discord.MessageEmbed()
                 .setDescription(`${crossmark}  This is not a number, you must specify a number.`)
@@ -67,15 +77,8 @@ module.exports = {
             return message.channel.send(underLimitEmbed)
         }
 
-        //Checks if the user has permissions to do this command
-        if (!message.member.permissions.has('MANAGE_CHANNELS' || 'ADMINISTRATOR')) {
-            const noPermissions = new Discord.MessageEmbed()
-            .setDescription(`${crossmark}  You must have "MANAGE CHANNEL" or "ADMINISTRATOR" permissions in your role to use this command.`)
-            .setColor('#D64D50');
-        return message.channel.send(noPermissions);
-        }
-
-        message.channel.setRateLimitPerUser(args[0]).catch(err => {
+        //Sets the slowmode time on what the user put stating args 0
+        message.channel.setRateLimitPerUser(args[0]).catch(err => { //Catches any errors that can happen
             console.log(`FAILED TO SET SLOWMODE, MORE DETAILS STATE: ${err}`);
             const failedToSetRateLimitEmbed = new Discord.MessageEmbed()
                 .setDescription(`${crossmark}  Failed to set the rate limit, please try again`)

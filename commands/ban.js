@@ -5,7 +5,7 @@
 const checkmark = '<:checkmark:856176905643098122>';
 const crossmark = '<:crossmark:856190653389471794>';
 
-//Command handler || DO NOT MESS WITH
+//Module export, DO NOT MESS WITH
 module.exports= {
     name: 'ban',
     descriptions: 'this is a ban command',
